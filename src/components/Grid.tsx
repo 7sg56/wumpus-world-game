@@ -110,9 +110,9 @@ export const Grid: React.FC<GridProps> = ({ state }) => {
 
                                 {renderRevealed && (hasStench || hasBreeze || hasGlitter) && (
                                     <div className="indicator-grid" style={{ zIndex: 5 }}>
-                                        {hasStench && <span title="Stench" className="indicator"><Zap size={22} color="#f87171" className="glitter-pulse" /></span>}
-                                        {hasBreeze && <span title="Breeze" className="indicator"><Wind size={22} color="#60a5fa" className="glitter-pulse" /></span>}
-                                        {hasGlitter && <span title="Glitter" className="indicator"><Sparkles size={22} color="#fbbf24" className="glitter-pulse" /></span>}
+                                        {hasStench && <span className="indicator"><Zap size={22} color="#f87171" className="glitter-pulse" /></span>}
+                                        {hasBreeze && <span className="indicator"><Wind size={22} color="#60a5fa" className="glitter-pulse" /></span>}
+                                        {hasGlitter && <span className="indicator"><Sparkles size={22} color="#fbbf24" className="glitter-pulse" /></span>}
                                     </div>
                                 )}
                             </div>

@@ -8,8 +8,6 @@ import {
     createInitialGrid,
     getSensors
 } from '../logic/wumpusGame';
-import confetti from 'canvas-confetti';
-
 export const useWumpusGame = () => {
     const [state, setState] = useState<GameState>(() => ({
         grid: createInitialGrid(),
@@ -46,10 +44,12 @@ export const useWumpusGame = () => {
             if (cell.hasGold) {
                 message = "Victory! You found the gold!";
                 isGameOver = true;
-                confetti({
-                    particleCount: 150,
-                    spread: 70,
-                    origin: { y: 0.6 }
+                import('canvas-confetti').then((confettiModule) => {
+                    confettiModule.default({
+                        particleCount: 150,
+                        spread: 70,
+                        origin: { y: 0.6 }
+                    });
                 });
             } else if (cell.hasWumpus && prev.isWumpusAlive) {
                 message = "OH NO! The Wumpus ate you!";

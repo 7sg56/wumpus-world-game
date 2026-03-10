@@ -4,9 +4,43 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>wumpus-world</title>
+    <title>Wumpus World</title>
+    <style>
+      html, body {
+        margin: 0;
+        padding: 0;
+        background-color: #050505;
+        color: #f8fafc;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        height: 100svh;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+        overscroll-behavior: none;
+        touch-action: none;
+      }
+      #root {
+        width: 100%;
+        height: 100%;
+      }
+      #initial-loader {
+        font-size: 1.25rem;
+        font-weight: 600;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        animation: pulse 1.5s infinite;
+      }
+      @keyframes pulse {
+        0% { opacity: 0.6; }
+        50% { opacity: 1; }
+        100% { opacity: 0.6; }
+      }
+    </style>
   </head>
   <body>
+    <!-- <div id="initial-loader">Loading...</div> -->
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>

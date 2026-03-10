@@ -79,7 +79,7 @@ export const Grid: React.FC<GridProps> = ({ state }) => {
                         }
                     });
 
-                    const renderRevealed = cell.isRevealed || state.isGameOver;
+                    const renderRevealed = cell.isRevealed || (state.isGameOver && state.message.includes('Victory'));
 
                     return (
                         <div

@@ -54,15 +54,16 @@ export const createInitialGrid = (): Cell[][] => {
   } while (goldPos.x === wumpusPos.x && goldPos.y === wumpusPos.y);
   grid[goldPos.y][goldPos.x].hasGold = true;
 
-  // Place exactly one Pit
-  let pitPos;
-  do {
-    pitPos = getRandomCell();
-  } while (
-    (pitPos.x === wumpusPos.x && pitPos.y === wumpusPos.y) ||
-    (pitPos.x === goldPos.x && pitPos.y === goldPos.y)
-  );
-  grid[pitPos.y][pitPos.x].hasPit = true;
+  // Place Pits (20% chance per cell, except [0,0])
+  for (let y = 0; y < GRID_SIZE; y++) {
+    for (let x = 0; x < GRID_SIZE; x++) {
+      if (x === 0 && y === 0) continue;
+      if (grid[y][x].hasWumpus || grid[y][x].hasGold) continue;
+      if (Math.random() < 0.2) {
+        grid[y][x].hasPit = true;
+      }
+    }
+  }
 
   // Reveal starting cell
   grid[0][0].isRevealed = true;

@@ -3,7 +3,7 @@ import { Grid } from './components/Grid';
 import { Controls } from './components/Controls';
 import { StatusPanel } from './components/StatusPanel';
 import { useWumpusGame } from './hooks/useWumpusGame';
-import { Trophy, Skull } from 'lucide-react';
+import { Trophy, Skull, CircleDashed } from 'lucide-react';
 
 const App: React.FC = () => {
   const { state, sensors, actions } = useWumpusGame();
@@ -62,11 +62,13 @@ const App: React.FC = () => {
           <div className="glass-panel" style={{ padding: '1.5rem', textAlign: 'center', background: 'rgba(239, 68, 68, 0.1)', borderColor: state.message.includes('Victory') ? 'rgba(245, 158, 11, 0.5)' : 'rgba(239, 68, 68, 0.5)' }}>
             {state.message.includes('Victory') ? (
               <Trophy size={48} color="#fbbf24" style={{ margin: '0 auto 1rem' }} />
+            ) : state.message.includes('pit') ? (
+              <CircleDashed size={48} color="#ef4444" style={{ margin: '0 auto 1rem' }} />
             ) : (
               <Skull size={48} color="#ef4444" style={{ margin: '0 auto 1rem' }} />
             )}
             <h2 style={{ fontSize: '1.5rem', marginBottom: '0.5rem', color: state.message.includes('Victory') ? '#fbbf24' : '#ef4444' }}>
-              {state.message.includes('Victory') ? 'Victory!' : 'Game Over'}
+              {state.message.includes('Victory') ? 'Victory!' : state.message.includes('pit') ? 'Fell into a Pit!' : 'Eaten by Wumpus!'}
             </h2>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem', marginTop: '1rem' }}>
               <button className="btn" onClick={actions.respawn} style={{ padding: '0.75rem', fontSize: '1rem' }} title="Retry the same exact cave layout.">

@@ -11,17 +11,11 @@ interface StatusPanelProps {
         breeze: boolean;
         glitter: boolean;
     };
-    score: number;
-    arrows: number;
-    hasGold: boolean;
     message: string;
 }
 
 export const StatusPanel: React.FC<StatusPanelProps> = ({
     sensors,
-    score,
-    arrows,
-    hasGold,
     message
 }) => {
     return (
@@ -30,20 +24,6 @@ export const StatusPanel: React.FC<StatusPanelProps> = ({
                 {message}
             </div>
 
-            <div className="stats-box">
-                <div className="stat-row">
-                    <span>Score</span>
-                    <span className="stat-value">{score}</span>
-                </div>
-                <div className="stat-row">
-                    <span>Arrows</span>
-                    <span className="stat-value">{arrows}</span>
-                </div>
-                <div className="stat-row">
-                    <span>Inventory</span>
-                    <span className="stat-value">{hasGold ? 'GOLD' : 'None'}</span>
-                </div>
-            </div>
 
             <div className="sensors-box">
                 <h4 style={{ marginBottom: '0.75rem', fontSize: '0.8rem', color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Sensors</h4>

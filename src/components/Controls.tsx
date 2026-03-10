@@ -1,70 +1,44 @@
 import React from 'react';
-import {
-    ArrowUp,
-    ArrowDown,
-    ArrowLeft,
-    ArrowRight,
-    Hand,
-    Crosshair,
-    Mountain
-} from 'lucide-react';
+import { ArrowUp, ArrowDown, ArrowLeft, ArrowRight } from 'lucide-react';
 import type { Direction } from '../logic/wumpusGame';
 
 interface ControlsProps {
     actions: {
         move: (dir: Direction) => void;
-        grab: () => void;
-        shoot: () => void;
-        climb: () => void;
-        reset: () => void;
+        restart: () => void;
+        respawn: () => void;
     };
-    disabled: boolean;
-    canClimb: boolean;
-    arrows: number;
 }
 
-export const Controls: React.FC<ControlsProps> = ({ actions, disabled, canClimb, arrows }) => {
+export const Controls: React.FC<ControlsProps> = ({ actions }) => {
     return (
         <div className="controls-panel">
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', alignItems: 'center', marginBottom: '1rem' }}>
-                <button className="btn primary" style={{ width: '80px' }} onClick={() => actions.move('NORTH')} disabled={disabled} title="Move North">
-                    <ArrowUp size={20} />
-                    <span>Up</span>
+            <h4 style={{ marginBottom: '0.5rem', fontSize: '0.8rem', color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.05em', textAlign: 'center' }}>Movement</h4>
+            <div className="dpad-container" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.5rem', marginBottom: '1.5rem' }}>
+                <button className="btn" style={{ width: '64px', height: '64px', padding: 0, justifyContent: 'center' }} onClick={() => actions.move('NORTH')} title="Move North">
+                    <ArrowUp size={28} />
                 </button>
-                <div style={{ display: 'flex', gap: '0.75rem' }}>
-                    <button className="btn" style={{ width: '80px' }} onClick={() => actions.move('WEST')} disabled={disabled} title="Move West">
-                        <ArrowLeft size={20} />
-                        <span>Left</span>
+                <div style={{ display: 'flex', gap: '0.5rem' }}>
+                    <button className="btn" style={{ width: '64px', height: '64px', padding: 0, justifyContent: 'center' }} onClick={() => actions.move('WEST')} title="Move West">
+                        <ArrowLeft size={28} />
                     </button>
-                    <button className="btn" style={{ width: '80px' }} onClick={() => actions.move('SOUTH')} disabled={disabled} title="Move South">
-                        <ArrowDown size={20} />
-                        <span>Down</span>
+                    <button className="btn" style={{ width: '64px', height: '64px', padding: 0, justifyContent: 'center' }} onClick={() => actions.move('SOUTH')} title="Move South">
+                        <ArrowDown size={28} />
                     </button>
-                    <button className="btn" style={{ width: '80px' }} onClick={() => actions.move('EAST')} disabled={disabled} title="Move East">
-                        <ArrowRight size={20} />
-                        <span>Right</span>
+                    <button className="btn" style={{ width: '64px', height: '64px', padding: 0, justifyContent: 'center' }} onClick={() => actions.move('EAST')} title="Move East">
+                        <ArrowRight size={28} />
                     </button>
                 </div>
             </div>
 
-            <div className="action-grid">
-                <button className="btn" onClick={actions.grab} disabled={disabled} title="Grab Gold">
-                    <Hand size={20} />
-                    <span>Grab</span>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem', marginTop: 'auto' }}>
+                <button className="btn" onClick={actions.respawn} style={{ padding: '0.75rem', fontSize: '0.85rem' }} title="Retry the same exact cave layout.">
+                    Respawn
                 </button>
-                <button className="btn" onClick={actions.shoot} disabled={disabled || arrows <= 0} title="Shoot Arrow">
-                    <Crosshair size={20} />
-                    <span>Shoot</span>
-                </button>
-                <button className="btn" onClick={actions.climb} disabled={disabled || !canClimb} title="Climb Out">
-                    <Mountain size={20} />
-                    <span>Climb</span>
+                <button className="btn primary" onClick={actions.restart} style={{ padding: '0.75rem', fontSize: '0.85rem' }} title="Generate a totally new cave.">
+                    Restart
                 </button>
             </div>
-
-            <button className="btn" onClick={actions.reset} style={{ width: '100%', marginTop: 'auto' }}>
-                Reset Game
-            </button>
         </div>
     );
 };

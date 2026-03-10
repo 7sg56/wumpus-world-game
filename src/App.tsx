@@ -34,20 +34,6 @@ const App: React.FC = () => {
         case 'D':
           actions.move('EAST');
           break;
-        case 'g':
-        case 'G':
-          actions.grab();
-          break;
-        case 'f':
-        case 'F':
-        case ' ': // spacebar
-          e.preventDefault(); // Prevent scrolling when shooting with space
-          actions.shoot();
-          break;
-        case 'c':
-        case 'C':
-          actions.climb();
-          break;
       }
     };
 
@@ -57,47 +43,46 @@ const App: React.FC = () => {
 
   return (
     <div className="game-container">
-      <div style={{ gridColumn: '1 / -1', textAlign: 'center', marginBottom: '1rem' }}>
-        <h1 className="title">WUMPUS WORLD</h1>
-        <p style={{ color: '#94a3b8', fontSize: '0.9rem' }}>Navigate: WASD/Arrows | Shoot: Space/F | Grab: G | Climb: C</p>
+      <div style={{ gridColumn: '1 / -1', textAlign: 'center', marginBottom: '0.25rem' }}>
+        <h1 className="title" style={{ fontSize: '2rem', marginBottom: '0.25rem' }}>WUMPUS WORLD</h1>
+        <p style={{ color: '#94a3b8', fontSize: '0.85rem' }}>Navigate: WASD/Arrows</p>
       </div>
 
-      <Grid state={state} />
+      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: 0, minWidth: 0 }}>
+        <Grid state={state} />
+      </div>
 
-      <div className="controls-container" style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
+      <div className="controls-container" style={{ display: 'flex', flexDirection: 'column', gap: '1rem', minHeight: 0 }}>
         <StatusPanel
           sensors={sensors}
-          score={state.score}
-          arrows={state.arrows}
-          hasGold={state.hasGold}
           message={state.message}
         />
 
-        <Controls
-          actions={actions}
-          disabled={state.isGameOver}
-          canClimb={state.canClimb}
-          arrows={state.arrows}
-        />
-      </div>
-
-      {state.isGameOver && (
-        <div className="game-over-overlay">
-          {state.hasGold && state.canClimb ? (
-            <Trophy size={80} color="#fbbf24" style={{ marginBottom: '1rem' }} />
-          ) : (
-            <Skull size={80} color="#ef4444" style={{ marginBottom: '1rem' }} />
-          )}
-          <h2 style={{ fontSize: '2.5rem', marginBottom: '0.5rem' }}>Game Over</h2>
-          <p style={{ fontSize: '1.25rem', color: '#94a3b8', marginBottom: '2rem' }}>{state.message}</p>
-          <div style={{ fontSize: '1.5rem', fontWeight: 600, marginBottom: '2.5rem' }}>
-            Final Score: <span style={{ color: '#f59e0b' }}>{state.score}</span>
+        {state.isGameOver ? (
+          <div className="glass-panel" style={{ padding: '1.5rem', textAlign: 'center', background: 'rgba(239, 68, 68, 0.1)', borderColor: state.message.includes('Victory') ? 'rgba(245, 158, 11, 0.5)' : 'rgba(239, 68, 68, 0.5)' }}>
+            {state.message.includes('Victory') ? (
+              <Trophy size={48} color="#fbbf24" style={{ margin: '0 auto 1rem' }} />
+            ) : (
+              <Skull size={48} color="#ef4444" style={{ margin: '0 auto 1rem' }} />
+            )}
+            <h2 style={{ fontSize: '1.5rem', marginBottom: '0.5rem', color: state.message.includes('Victory') ? '#fbbf24' : '#ef4444' }}>
+              {state.message.includes('Victory') ? 'Victory!' : 'Game Over'}
+            </h2>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem', marginTop: '1rem' }}>
+              <button className="btn" onClick={actions.respawn} style={{ padding: '0.75rem', fontSize: '1rem' }} title="Retry the same exact cave layout.">
+                Respawn
+              </button>
+              <button className="btn primary" onClick={actions.restart} style={{ padding: '0.75rem', fontSize: '1rem' }} title="Generate a totally new cave.">
+                Restart
+              </button>
+            </div>
           </div>
-          <button className="btn primary" onClick={actions.reset} style={{ padding: '1rem 3rem', fontSize: '1rem' }}>
-            Try Again
-          </button>
-        </div>
-      )}
+        ) : (
+          <Controls
+            actions={actions}
+          />
+        )}
+      </div>
     </div>
   );
 };
